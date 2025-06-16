@@ -10,21 +10,26 @@ static List* string_tail = NULL;
 
 void menu()
 {
-	functions sw = add;
-	int power;
-	int coeff;
-	polynom* head = NULL;
-	do
-	{
-		printf("Choose function from list:\n"
-			"1 - Add an element to a polynomial\n"
-			"2 - Print polynom\n"
-			"3 - Enter a string of lowercase Latin letters\n"
-			"4 - Split words with hyphens\n"
-			"5 - Exit out of program\n");
-		scanf_s("%d", &sw);
-		switch (sw)
-		{
+    functions sw = add;
+    int power;
+    int coeff;
+    polynom* head = NULL;
+    do
+    {
+        printf("Choose function from list:\n"
+            "1 - Add an element to a polynomial\n"
+            "2 - Print polynom\n"
+            "3 - Enter a string of lowercase Latin letters\n"
+            "4 - Split words with hyphens\n"
+            "5 - Exit out of program\n");
+        if (scanf_s("%d", &sw) != 1)
+        {
+            while (getchar() != '\n');
+            printf("Error\n");
+            continue;
+        }
+        switch (sw)
+        {
         case add: {
             printf("Enter the power of the element to add: ");
             if (scanf_s("%d", &power) != 1 || power < 0)
@@ -62,10 +67,10 @@ void menu()
             printf("\nPolynomial added successfully!\n");
             break;
         }
-		case print_polynom:
-			print_polynom_node(head);
-			printf("\n");
-			break;
+        case print_polynom:
+            print_polynom_node(head);
+            printf("\n");
+            break;
         case input_string: {
             while (getchar() != '\n');
             printf("Enter a string of lowercase Latin letters ending with '.': ");
@@ -78,7 +83,7 @@ void menu()
             }
 
             char* dot = strchr(input, '.');
-            if (dot==NULL)
+            if (dot == NULL)
             {
                 printf("Error.\n");
                 break;
@@ -141,27 +146,27 @@ void menu()
             print_list(string_head);
             break;
         }
-		case exit1:
-		{
-			polynom* tmp;
-			while (head != NULL)
-			{
-				tmp = head;
-				head = head->next;
-				free(tmp);
-			}
+        case exit1:
+        {
+            polynom* tmp;
+            while (head != NULL)
+            {
+                tmp = head;
+                head = head->next;
+                free(tmp);
+            }
             if (string_head)
             {
                 free_list(string_head);
                 string_head = NULL;
                 string_tail = NULL;
             }
-			return;
-		}
-		default:
-			printf("Input error!\n");
-			break;
-		}
-	} while (sw != exit1);
-	return;
+            return;
+        }
+        default:
+            printf("Input error!\n");
+            break;
+        }
+    } while (sw != exit1);
+    return;
 }

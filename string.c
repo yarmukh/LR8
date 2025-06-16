@@ -3,7 +3,7 @@
 
 int is_lower_latin(char c)
 {
-    return ((c >= 'a' && c <= 'z')||(c == '-'));
+    return ((c >= 'a' && c <= 'z')||(c == '-')||(c=='.')||(c == ' '));
 }
 
 
